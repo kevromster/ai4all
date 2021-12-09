@@ -1,0 +1,71 @@
+<h2>Добавить новую камеру <span class="title_camera_name">{{cameraToAdd.name}}</span></h2>
+<div class="description">
+В качестве <strong>адреса камеры</strong> укажите ссылку на видеопоток IP-камеры (например,
+rtsp://1.2.3.4) либо ссылку на fullscreen-трансляцию, которая открывается в браузере.
+<p>
+Настройте детектор на нужный тип объекта и выберите условие срабатывания:
+<ul>
+<li><strong>Появление и пропажа.</strong> Если объект отсутствовал ранее и появился в кадре,
+будет отправлено сообщение в Telegram. Следующее сообщение будет отправлено, только когда
+объект исчезнет из кадра.</li>
+<li><strong>Наличие.</strong> Если объект найден в кадре, будет отправлено сообщение в Telegram.</li>
+<li><strong>Отсутствие.</strong> Если объект отсутствует в кадре, будет отправлено сообщение в Telegram.</li>
+</ul>
+<p>
+Вы также можете настроить <strong>порог срабатывания</strong> - фактически, это степень уверенности искусственного
+интеллекта в том, что он обнаружил нужный объект. Чем он выше, тем точнее будет поиск объектов, но вероятность
+пропустить объект повышается.
+</div>
+<table>
+<tr>
+  <td><label>Название камеры:</label></td>
+  <td><input [(ngModel)]="cameraToAdd.name" placeholder="введите любое имя"/></td>
+</tr>
+<tr>
+  <td><label>URL адрес: <span class="required_asterisk">*</span></label></td>
+  <td><input [(ngModel)]="cameraToAdd.url" placeholder="ссылка на видеопоток"/></td>
+</tr>
+<tr>
+<td><label>Область для поиска объекта:</label></td>
+<td>
+  <table>
+  <tr><td colspan="4">
+    <div class="screenshot">
+      <img class="screenshot_image" [src]="cameraToAdd.url" alt="...camera screenshot...">
+      <div class="screenshot_rect" [style]="camera_edge_as_safe_style"></div>
+    </div>
+  </td></tr>
+  <tr>
+    <td>слева:</td>
+    <td><mat-slider [(ngModel)]="cameraToAdd.edge_left" value="{{cameraToAdd.edge_left}}" (change)="edgeChanged()"></mat-slider></td>
+    <td>справа:</td>
+    <td><mat-slider [(ngModel)]="cameraToAdd.edge_right" value="{{cameraToAdd.edge_right}}" (change)="edgeChanged()"></mat-slider></td>
+  </tr>
+  <tr>
+    <td>сверху:</td>
+    <td><mat-slider [(ngModel)]="cameraToAdd.edge_top" value="{{cameraToAdd.edge_top}}" (change)="edgeChanged()"></mat-slider></td>
+    <td>снизу:</td>
+    <td><mat-slider [(ngModel)]="cameraToAdd.edge_bottom" value="{{cameraToAdd.edge_bottom}}" (change)="edgeChanged()"></mat-slider></td>
+  </tr>
+  </table>
+</td>
+</tr>
+<tr>
+  <td><label>На что будет срабатывать детектор? <span class="required_asterisk">*</span></label></td>
+  <td>
+    <select [(ngModel)]="cameraToAdd.notification_type">
+      <option *ngFor="let item of notificationTypes" value="{{item.db_value}}">{{item.display_name}}</option>
+    </select>&nbsp;
+    <select [(ngModel)]="cameraToAdd.what_to_detect" (change)="whatToDetectChanged()">
+      <option *ngFor="let item of detectionItems" value="{{item.db_value}}">{{item.display_name}}</option>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td><label>Порог срабатывания детектора:</label></td>
+  <td><mat-slider class="detection_threshold" [(ngModel)]="cameraToAdd.detection_threshold" thumbLabel min="1" max="100" value="{{cameraToAdd.detection_threshold}}"></mat-slider>{{cameraToAdd.detection_threshold}} %</td>
+</tr>
+</table>
+<div class="required_asterisk">* обязательные поля</div>
+<button (click)="goToCamerasList()">к списку камер</button>
+<button (click)="add()">добавить</button>

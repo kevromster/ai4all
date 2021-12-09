@@ -1,0 +1,54 @@
+/* CameraDetailComponent's private CSS styles */
+.title_camera_name {
+  color: #8B0000
+}
+.required_asterisk {
+  color: #DD0000
+}
+.screenshot {
+  max-width: 31em;
+  float: left;
+  position: relative;
+}
+.screenshot_image {
+  max-width: 100%;
+  max-height: auto;
+}
+.screenshot_rect {
+  border:2px solid yellow;
+  position:absolute;
+}
+label {
+  display: inline-block;
+  width: 15em;
+  margin: .5em 0;
+  color: #607D8B;
+  font-weight: bold;
+}
+input {
+  width: 30em;
+  height: 2em;
+  font-size: 1em;
+  padding-left: .4em;
+}
+button {
+  margin-top: 20px;
+  margin-right: 10px;
+  font-family: Arial;
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer; cursor: hand;
+}
+button:hover {
+  background-color: #cfd8dc;
+}
+button:disabled {
+  background-color: #eee;
+  color: #ccc;
+  cursor: auto;
+}
+mat-slider.detection_threshold {
+  width: 20em;
+}

@@ -1,0 +1,15 @@
+<h2>Мои камеры</h2>
+
+<ul class="cameras">
+  <li *ngFor="let camera of cameras">
+    <a routerLink="/detail/{{camera.id}}" title="{{camera.name}}">
+      <span class="badge">{{camera.display_order}}</span>
+      <span class="trim-text">{{camera.name}}</span></a>
+    <button class="delete" title="удалить камеру"
+      (click)="delete(camera)">x</button>
+  </li>
+</ul>
+
+<nav>
+  <a routerLink="/add/{{tgChatId}}">Добавить камеру</a>
+</nav>

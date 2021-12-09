@@ -1,0 +1,60 @@
+<div *ngIf="camera">
+  <h2>Настройки камеры <span class="title_camera_name">{{camera.name}}</span></h2>
+  <table>
+  <tr>
+    <td><label>Название камеры:</label></td>
+    <td><input [(ngModel)]="camera.name" placeholder="введите любое имя"/></td>
+  </tr>
+  <tr>
+    <td><label>URL адрес: <span class="required_asterisk">*</span></label></td>
+    <td><input [(ngModel)]="camera.url" placeholder="ссылка на видеопоток"/></td>
+  </tr>
+  <tr>
+    <td><label>Область для поиска объекта:</label></td>
+    <td>
+      <table>
+      <tr><td colspan="4">
+        <div class="screenshot">
+          <img class="screenshot_image" src="{{camera.url}}" alt="...camera screenshot...">
+          <div class="screenshot_rect" [style]="camera_edge_as_safe_style"></div>
+        </div>
+      </td></tr>
+      <tr>
+        <td>слева:</td>
+        <td><mat-slider [(ngModel)]="camera.edge_left" value="{{camera.edge_left}}" (change)="edgeChanged()"></mat-slider></td>
+        <td>справа:</td>
+        <td><mat-slider [(ngModel)]="camera.edge_right" value="{{camera.edge_right}}" (change)="edgeChanged()"></mat-slider></td>
+      </tr>
+      <tr>
+        <td>сверху:</td>
+        <td><mat-slider [(ngModel)]="camera.edge_top" value="{{camera.edge_top}}" (change)="edgeChanged()"></mat-slider></td>
+        <td>снизу:</td>
+        <td><mat-slider [(ngModel)]="camera.edge_bottom" value="{{camera.edge_bottom}}" (change)="edgeChanged()"></mat-slider></td>
+      </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td><label>На что будет срабатывать детектор? <span class="required_asterisk">*</span></label></td>
+    <td>
+      <select [(ngModel)]="camera.notification_type">
+        <option *ngFor="let item of notificationTypes" value="{{item.db_value}}">{{item.display_name}}</option>
+      </select>&nbsp;
+      <select [(ngModel)]="camera.what_to_detect" (change)="whatToDetectChanged()">
+        <option *ngFor="let item of detectionItems" value="{{item.db_value}}">{{item.display_name}}</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><label>Порог срабатывания детектора:</label></td>
+    <td><mat-slider class="detection_threshold" [(ngModel)]="camera.detection_threshold" min="1" max="100" thumbLabel value="{{camera.detection_threshold}}"></mat-slider>{{camera.detection_threshold}} %</td>
+  </tr>
+  <tr>
+    <td><label>Нотификации включены</label></td>
+    <td><input [(ngModel)]="camera.detection_enabled" type="checkbox" style="width:auto"></td>
+  </tr>
+  </table>
+  <div class="required_asterisk">* обязательные поля</div>
+  <button (click)="goBack()">назад</button>
+  <button (click)="update()">обновить</button>
+</div>
